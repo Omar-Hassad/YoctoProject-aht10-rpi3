@@ -1,0 +1,12 @@
+header:
+  version: 14
+
+repos:
+  meta-omar:
+     path: meta-omar
+
+  meta-omar-bsp:
+     path: meta-omar-bsp
+
+  meta-omar-distro:
+     path: meta-omar-distro

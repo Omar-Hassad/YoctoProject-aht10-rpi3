@@ -1,0 +1,12 @@
+header:
+  version: 14
+  includes : 
+     - kas/include/common.yml
+
+machine: raspberrypi3
+target: core-image-minimal
+
+
+
+  
+
