@@ -1,19 +1,26 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]; then
-    echo "Usage: $0 checkout|shell|build <path/to/yml>"
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 checkout|shell|build <path/to/yml> <path/to/YoctoShare>"
     exit 1
 fi
 
-VENV_DIR="../yocto-venv"
+PROJECT_DIR="$(realpath $(dirname "$0")/..)"
+VENV_DIR="${PROJECT_DIR}/yocto-venv"
+YOCTO_SHARE="${3}"
 
 do_prepare_env(){
     if [ -d "${VENV_DIR}" ]; then
-        # Make sure that it is actually a python virtual environment
-        # if it is not, then fail with an error message
-        exit 1
+        if [ ! "${VENV_DIR}/pyvenv.cfg" ]; then
+            echo "[x] Python venv directory exist but no pyvenv.cfg"
+            echo "[x] Make sure to remove the directory and repeat again"
+            exit 1
+        fi
     else
-        python3 -m venv "${VENV_DIR}"
+        python3 -m venv "${VENV_DIR}" || {
+            echo "[x] Failed to setup python3 venv"
+            exit 1
+        }
     fi
 
     # Source the venv
@@ -24,16 +31,19 @@ do_prepare_env(){
     }
 
     # Install "kas"
-    if ! pip3 install kas; then
-        echo "[x] Error installing kas .."
-        exitg 1
+    if ! pip3 list | grep -q kas; then
+        echo "[+] Installing kas"
+        if ! pip3 install kas; then
+            echo "[x] Error installing kas .."
+            exitg 1
+        fi
     fi
-
 }
 
-do_kas_checkout(){
+do_kas(){
     local yml="${1}"
-    kas-container checkout "${yml}"
+    local action="${2}"
+    kas-container --runtime-args "-v ${YOCTO_SHARE}:/yoctoshare" "${action}" "${yml}"
 }
 
 main(){
@@ -47,16 +57,23 @@ main(){
         exit 1
     fi
 
-    if [ "${action}" == "checkout" ]; then
-        do_kas_checkout "${yml}"
-    elif [ "${action}" == "shell" ]; then
-        do_kas_shell "${yml}"
-    elif [ "${action}" == "build" ]; then
-        do_kas_build "${yml}"
-    else
-        echo "[x] Wrong action"
+    if [ "${action}" != "shell" -a "${action}" != "build" -a "${action}" != "checkout" ]; then
+        echo "[ERROR] Wrong KAS action, possible: shell, build or checkout"
         exit 1
     fi
+
+    do_kas "${yml}" "${action}"
 }
 
+if [ ! -d "${YOCTO_SHARE}" ]; then
+    echo "[ERROR] The provided path (${YOCTO_SHARE}) is not a directory"
+    exit 1
+else
+    if [ ! -d "${YOCTO_SHARE}/downloads" -o ! -d "${YOCTO_SHARE}/sstate-cache" ]; then
+        echo "[ERROR] Make sure you have downloads and sstate-cache under ${YOCTO_SHARE}"
+        exit 1
+    fi
+fi
+
 main "$@"
+
