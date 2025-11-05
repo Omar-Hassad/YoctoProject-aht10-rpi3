@@ -3,4 +3,4 @@ build/
 layers/
 .kas_shell_history
 .github
-.vscode/
+.vscode
