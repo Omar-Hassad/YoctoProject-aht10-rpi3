@@ -1,0 +1,18 @@
+header:
+  version: 11
+
+repos:
+  meta-rauc:
+    url: https://github.com/rauc/meta-rauc.git
+    path: layers/meta-rauc
+    branch: scarthgap
+    commit: a0f4a8b9986954239850b9d4256c003c91e6b931
+
+  meta-rauc-raspberrypi:
+    url: https://github.com/rauc/meta-rauc-community.git
+    path: layers/meta-rauc-community
+    branch: scarthgap
+    commit: 1fd7bc779903985b81b56772bef75ef92b753d09
+    layers:
+      meta-rauc-raspberrypi:
+        

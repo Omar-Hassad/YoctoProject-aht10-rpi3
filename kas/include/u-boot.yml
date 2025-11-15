@@ -1,0 +1,9 @@
+header:
+  version: 11
+
+repos:
+  u-boot:
+    url: https://github.com/u-boot/u-boot.git
+    path: layers/u-boot
+    branch: scarthgap
+    #commit: caa740df9cae5ddc74b18b88a4fea43e27b2fdf6

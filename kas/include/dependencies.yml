@@ -1,0 +1,9 @@
+header:
+  version: 11
+
+repos:
+  meta-lts-kernel-mixin:
+    url: https://git.yoctoproject.org/meta-lts-mixins
+    path: layers/meta-lts-kernel-mixin
+    branch: scarthgap/u-boot
+    commit: a44882db02a0ed0f149371831bfbe067665eb42b 

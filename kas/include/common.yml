@@ -5,5 +5,9 @@ header:
      - kas/include/oe.yml
      - kas/include/rpi.yml
      - kas/include/omar.yml
+     - kas/include/rauc.yml
+     - kas/include/dependencies.yml
+     - kas/include/u-boot.yml
+
 
 distro: omar
