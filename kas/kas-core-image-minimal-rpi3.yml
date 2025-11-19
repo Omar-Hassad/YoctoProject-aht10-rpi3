@@ -3,7 +3,7 @@ header:
   includes : 
      - kas/include/common.yml
 
-machine: raspberrypi3
+machine: machine #raspberrypi3
 target: core-image-minimal
 
 
