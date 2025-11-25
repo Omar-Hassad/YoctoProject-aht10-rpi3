@@ -46,6 +46,28 @@ do_kas(){
     kas-container --runtime-args "-v ${YOCTO_SHARE}:/yoctoshare" "${action}" "${yml}"
 }
 
+do_http_server() {
+    local deploy_dir="${PROJECT_DIR}/build/tmp/deploy"
+
+    if [ ! -d "${deploy_dir}" ]; then
+        echo "[x] Deploy directory not found: ${deploy_dir}"
+        echo "[x] Make sure you already built an image (bitbake <image>)"
+        exit 1
+    fi
+
+    echo "[+] Starting Docker HTTP server on port 8080"
+    echo "[+] Serving directory: ${deploy_dir}"
+
+    docker run -d \
+        -p 8080:80 \
+        -v "${deploy_dir}:/usr/local/apache2/htdocs/" \
+        --name yocto-http-server \
+        httpd:2.4
+
+    echo "[+] HTTP server is running at: http://localhost:8080"
+}
+
+
 main(){
     do_prepare_env
 
@@ -57,9 +79,14 @@ main(){
         exit 1
     fi
 
-    if [ "${action}" != "shell" -a "${action}" != "build" -a "${action}" != "checkout" ]; then
-        echo "[ERROR] Wrong KAS action, possible: shell, build or checkout"
-        exit 1
+    if [ "${action}" != "shell" -a "${action}" != "build" -a "${action}" != "checkout" -a "${action}" != "http" ]; then
+    echo "[ERROR] Wrong action, possible: shell, build, checkout, http"
+    exit 1
+fi
+
+    if [ "${action}" == "http" ]; then
+        do_http_server
+        exit 0
     fi
 
     do_kas "${yml}" "${action}"

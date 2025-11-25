@@ -1,0 +1,17 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2837";
+
+    fragment@0 {
+        target = <&gpio>;
+        __overlay__ {
+            mygpio {
+                brcm,pins = <17 27>;   /* GPIO17 et GPIO27 */
+                brcm,function = <4>;   /* Fonction ALT4, par exemple SPI ou UART selon usage */
+                brcm,pull = <0>;       /* Pas de pull-up/down */
+            };
+        };
+    };
+};

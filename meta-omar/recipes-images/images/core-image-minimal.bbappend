@@ -2,7 +2,7 @@ SUMMARY = "Image OMAR"
 LICENSE = "MIT"
 
 inherit core-image
-inherit wic-img
+#inherit wic
 
 # Fichier WIC pour créer l'image SD dual-rootfs A/B 
 # avec boot et rootfs pour Raspberry Pi
@@ -11,7 +11,6 @@ WKS_FILE = "image.wks"
 IMAGE_INSTALL = "\
     packagegroup-core-boot \
     packagegroup-core-ssh-openssh \
-    packagegroup-self-hosted \
     kernel-dev \ 
     kernel-devsrc \
     connman \
@@ -37,4 +36,4 @@ IMAGE_FSTYPES = "\
 SDIMG_ROOTFS_TYPE = "ext4"
 
 # Retirer le kernel du rootfs
-RDEPENDS_${KERNEL_PACKAGE_NAME}-base_remove = "kernel-image"
+#RDEPENDS_${KERNEL_PACKAGE_NAME}-base_remove = "kernel-image"

@@ -1,9 +1,0 @@
-header:
-  version: 11
-
-repos:
-  u-boot:
-    url: https://github.com/u-boot/u-boot.git
-    path: layers/u-boot
-    branch: master
-    commit: 6c2f2d9aa63d1642dffae7d7ac88f7ae879e13d1
