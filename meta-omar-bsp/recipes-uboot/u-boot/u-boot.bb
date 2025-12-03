@@ -7,8 +7,6 @@ SRCREV = "2bc0715b558fa1ac5c88b11e250740b16a905837"
 
 S = "${WORKDIR}/git"
 
-inherit u-boot
-
 do_compile() {
     oe_runmake rpi_3_defconfig
     oe_runmake

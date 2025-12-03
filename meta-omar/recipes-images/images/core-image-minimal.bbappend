@@ -2,36 +2,24 @@ SUMMARY = "Image OMAR"
 LICENSE = "MIT"
 
 inherit core-image
-#inherit wic
 
 # Fichier WIC pour créer l'image SD dual-rootfs A/B 
 # avec boot et rootfs pour Raspberry Pi
 WKS_FILE = "image.wks"
 
-IMAGE_INSTALL = "\
+# empêche WIC de modifier /etc/fstab pour RAUC A/B
+WIC_CREATE_EXTRA_ARGS = "--no-fstab-update"
+
+IMAGE_INSTALL = " \
     packagegroup-core-boot \
-    packagegroup-core-ssh-openssh \
-    kernel-dev \ 
-    kernel-devsrc \
-    connman \
-    connman-plugin-ethernet \
-    dhcpcd \
-    tzdata \
-    python3-pip \
-    perl-misc \
-    u-boot \
-    openssh \
+    rauc \
 "
 
-IMAGE_FSTYPES = "\
-    wic.vmdk \
-    wic.vhd \
-    wic.vhdx \
-    tar.bz2 \
-    ext4 \
-    wic.gz \
+IMAGE_FSTYPES = " \
+    wic \
     wic.bmap \
-"
+"  
+
  
 SDIMG_ROOTFS_TYPE = "ext4"
 

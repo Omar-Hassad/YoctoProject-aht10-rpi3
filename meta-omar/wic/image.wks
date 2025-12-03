@@ -1,0 +1,7 @@
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
+
+
+
+part /rauc/rootfs.A --source rootfs --fstype=ext4 --label rootfsA --ondisk mmcblk0 --fixed-size 1024M
+
+part /rauc/rootfs.B --source rootfs --fstype=ext4 --label rootfsB --ondisk mmcblk0 --fixed-size 1024M
