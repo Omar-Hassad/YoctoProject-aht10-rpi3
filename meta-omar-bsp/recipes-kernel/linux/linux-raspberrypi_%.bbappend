@@ -1,2 +1,5 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/fragments:"
-KERNEL_CONFIG_FRAGMENTS += "fragments.cfg"
+
+SRC_URI += "file://fragment.cfg"
+
+KERNEL_CONFIG_FRAGMENTS += "fragment.cfg"
